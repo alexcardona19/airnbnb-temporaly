@@ -1,2 +1,2 @@
 # airnbnb-temporaly
-Alquileres temporales
+Sistema de alquileres temporales

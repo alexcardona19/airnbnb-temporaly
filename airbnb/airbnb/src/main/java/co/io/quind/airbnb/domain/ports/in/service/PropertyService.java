@@ -19,7 +19,8 @@ public class PropertyService implements IPropertyService {
     }
     @Override
     public List<Property> listProperties(BigDecimal minPrice, BigDecimal maxPrice) {
-        return null;
+
+        return propertyRepository.findAvailablePropertiesByPriceRange(minPrice,maxPrice);
     }
 
     @Override

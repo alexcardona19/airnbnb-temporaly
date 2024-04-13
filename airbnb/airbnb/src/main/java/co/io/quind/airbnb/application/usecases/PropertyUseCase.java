@@ -1,11 +1,13 @@
 package co.io.quind.airbnb.application.usecases;
 
 import co.io.quind.airbnb.application.dto.PropertyDTO;
-import co.io.quind.airbnb.application.mapper.PropertyMapper;
 import co.io.quind.airbnb.domain.models.Property;
 import co.io.quind.airbnb.domain.ports.in.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class PropertyUseCase {
@@ -17,6 +19,12 @@ public class PropertyUseCase {
     }
     public Property registerProperty(PropertyDTO propertyDTO)
     {
-        return propertyService.registerProperty(PropertyMapper.toDomain(propertyDTO));
+        return propertyService.registerProperty(PropertyDTO.toDomain(propertyDTO));
     }
-}
+
+    public List<PropertyDTO> listProperties(BigDecimal minPrice, BigDecimal maxPrice) {
+        return PropertyDTO.crateFromDomainList(propertyService.listProperties(minPrice,maxPrice));
+    }
+
+
+    }

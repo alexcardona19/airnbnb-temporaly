@@ -1,4 +1,4 @@
-package co.io.quind.airbnb.application.exception;
+package co.io.quind.airbnb.domain.exception;
 
 public class BusinessException extends RuntimeException {
     public BusinessException() {

@@ -1,9 +1,8 @@
 package co.io.quind.airbnb.application.usecases.bussinessRules;
 
-import co.io.quind.airbnb.application.exception.BusinessException;
+import co.io.quind.airbnb.domain.exception.BusinessException;
 import co.io.quind.airbnb.domain.models.Property;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 

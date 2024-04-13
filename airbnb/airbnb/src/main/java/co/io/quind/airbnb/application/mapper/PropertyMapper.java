@@ -4,6 +4,8 @@ import co.io.quind.airbnb.application.dto.PropertyDTO;
 import co.io.quind.airbnb.domain.models.Property;
 
 public class PropertyMapper {
+
+
     public static Property toDomain(PropertyDTO propertyDTO) {
         return new Property(
                 propertyDTO.getId(),

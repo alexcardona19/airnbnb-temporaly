@@ -17,7 +17,6 @@ public class PropertyUseCase {
     }
     public Property registerProperty(PropertyDTO propertyDTO)
     {
-        var property = PropertyMapper.toDomain(propertyDTO);
-        return propertyService.registerProperty(property);
+        return propertyService.registerProperty(PropertyMapper.toDomain(propertyDTO));
     }
 }

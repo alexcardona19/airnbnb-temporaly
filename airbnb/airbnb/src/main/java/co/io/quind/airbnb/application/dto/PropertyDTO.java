@@ -2,15 +2,12 @@ package co.io.quind.airbnb.application.dto;
 
 import co.io.quind.airbnb.domain.models.Property;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -23,13 +20,10 @@ import java.util.List;
 public class PropertyDTO {
     private Long id;
 
-    @NotEmpty(message = "name may not be empty")
     private String name;
 
-    @NotEmpty(message = "location may not be empty")
     private String location;
 
-    @NotEmpty(message = "image may not be empty")
     private String image;
 
     private boolean isAvailable;

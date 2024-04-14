@@ -1,5 +1,4 @@
 package co.io.quind.airbnb.domain.ports.in.service;
-import co.io.quind.airbnb.application.dto.PropertyDTO;
 import co.io.quind.airbnb.application.usecases.bussinessRules.BusinessRulesValidator;
 import co.io.quind.airbnb.domain.exception.BusinessException;
 import co.io.quind.airbnb.domain.models.Property;
@@ -8,7 +7,6 @@ import co.io.quind.airbnb.infraestructure.adapters.repositories.PropertyReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -29,7 +27,7 @@ public class PropertyService implements IPropertyService {
     public Property registerProperty(Property property) {
         if(propertyRepository.existsByName(property.getName()))
         {
-            throw new BusinessException("Ya existe una propiedad registrada con el mismo nombre");
+            BusinessRulesValidator.validateDuplicateName(true);
         }
         BusinessRulesValidator.validateProperty(property);
         return propertyRepository.save(property);

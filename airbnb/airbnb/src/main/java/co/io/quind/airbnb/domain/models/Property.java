@@ -1,13 +1,13 @@
 package co.io.quind.airbnb.domain.models;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@Data
 @Builder
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Property {
@@ -18,5 +18,5 @@ public class Property {
     private boolean isAvailable;
     private double price;
     private Date date;
-    private boolean isDeleted = false;
+    private boolean isDeleted;
 }

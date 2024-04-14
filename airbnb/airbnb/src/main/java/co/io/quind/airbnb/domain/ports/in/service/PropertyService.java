@@ -1,5 +1,7 @@
 package co.io.quind.airbnb.domain.ports.in.service;
+import co.io.quind.airbnb.application.dto.PropertyDTO;
 import co.io.quind.airbnb.application.usecases.bussinessRules.BusinessRulesValidator;
+import co.io.quind.airbnb.domain.exception.BusinessException;
 import co.io.quind.airbnb.domain.models.Property;
 import co.io.quind.airbnb.domain.ports.in.interfaces.IPropertyService;
 import co.io.quind.airbnb.infraestructure.adapters.repositories.PropertyRepository;
@@ -17,6 +19,7 @@ public class PropertyService implements IPropertyService {
     public PropertyService(PropertyRepository propertyRepository) {
         this.propertyRepository = propertyRepository;
     }
+
     @Override
     public List<Property> listProperties(double minPrice, double maxPrice) {
         return propertyRepository.findAvailablePropertiesByPriceRange(minPrice,maxPrice);
@@ -29,12 +32,26 @@ public class PropertyService implements IPropertyService {
     }
 
     @Override
-    public void deleteProperty(Long PropertyId) {
-
+    public void deleteProperty(Long id) {
+        Property property = propertyRepository.findById(id);
+        if (property == null) {
+            throw new BusinessException("La propiedad con el ID especificado no ha sido encontrada");
+        } else if (BusinessRulesValidator.validateCreationDate(property.getDate())) {
+            property.setDeleted(true);
+            propertyRepository.save(property);
+        } else {
+            throw new BusinessException("La propiedad no puede ser borrada porque tiene una vigencia de creación superior a un mes.");
+        }
     }
 
     @Override
-    public void rentProperty(Long PropertyId, Property property) {
+    public Property rentProperty(Long id) throws BusinessException {
+        Property property = propertyRepository.findById(id);
+        if (!property.isAvailable()) {
+            throw new BusinessException("La propiedad ya está arrendada");
+        }
+        property.setAvailable(false);
 
+        return propertyRepository.save(property);
     }
 }

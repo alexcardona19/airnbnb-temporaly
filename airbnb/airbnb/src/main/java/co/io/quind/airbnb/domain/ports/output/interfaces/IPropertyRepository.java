@@ -12,7 +12,7 @@ import java.util.List;
 public interface IPropertyRepository {
     Property findById(Long id);
     Property save(Property property);
-    void deletePropertyById(Long id);
+    void deleteById(Long id);
     @Query("SELECT p FROM properties p WHERE p.isAvailable = true AND p.price BETWEEN :minPrice AND :maxPrice")
     List<Property> findAvailablePropertiesByPriceRange(@Param("minPrice") double minPrice, @Param("maxPrice") double maxPrice);
 

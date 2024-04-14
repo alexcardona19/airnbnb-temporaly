@@ -25,4 +25,13 @@ public class PropertyUseCase {
         return PropertyDTO.crateFromDomainList(propertyService.listProperties(minPrice,maxPrice));
     }
 
+    public void deleteProperty(long id) {
+        propertyService.deleteProperty(id);
+    }
+
+    public PropertyDTO rentProperty(long id){
+        return PropertyDTO.fromDomain(propertyService.rentProperty(id));
+    }
+
+
     }

@@ -7,8 +7,8 @@ import co.io.quind.airbnb.infraestructure.entities.PropertyEntity;
 import co.io.quind.airbnb.infraestructure.exception.DataBaseException;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class PropertyRepository implements IPropertyRepository {
@@ -21,7 +21,15 @@ public class PropertyRepository implements IPropertyRepository {
 
     @Override
     public Property findById(Long id) {
-        return null;
+        try
+        {
+            Optional<PropertyEntity> propertyOptional = propertyRepositoryJPA.findById(id);
+            return propertyOptional.map(PropertyEntity::toModel).orElse(null);
+        }catch(Exception exception)
+        {
+            //log.error("Ocurrió un error al intentar encontrar la propiedad por id de la base de datos", exception);
+            throw new DataBaseException("Ocurrió un error al intentar encontrar la propiedad por id de la BD");
+        }
     }
 
     @Override
@@ -38,8 +46,8 @@ public class PropertyRepository implements IPropertyRepository {
     }
 
     @Override
-    public void deletePropertyById(Long id) {
-
+    public void deleteById(Long id) {
+        propertyRepositoryJPA.deleteById(id);
     }
 
     @Override

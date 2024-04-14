@@ -5,13 +5,13 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
 
-@Getter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,18 +34,18 @@ public class PropertyDTO {
 
     private Date date;
 
-    private boolean isDeleted = false;
+    private boolean isDeleted;
 
     public static Property toDomain(PropertyDTO propertyDTO) {
         return Property.builder()
-                .id(propertyDTO.getId())
-                .name(propertyDTO.getName())
-                .location(propertyDTO.getLocation())
-                .image(propertyDTO.getImage())
-                .isAvailable(propertyDTO.isAvailable())
-                .price(propertyDTO.getPrice())
-                .date(propertyDTO.getDate())
-                .isDeleted(propertyDTO.isDeleted())
+                .id(propertyDTO.id)
+                .name(propertyDTO.name)
+                .location(propertyDTO.location)
+                .image(propertyDTO.image)
+                .isAvailable(propertyDTO.isAvailable)
+                .price(propertyDTO.price)
+                .date(propertyDTO.date)
+                .isDeleted(propertyDTO.isDeleted)
                 .build();
     }
 
@@ -58,8 +58,8 @@ public class PropertyDTO {
                 .image(property.getImage())
                 .isAvailable(property.isAvailable())
                 .price(property.getPrice())
-                .date(property.getDate())
                 .isDeleted(property.isDeleted())
+                .date(property.getDate())
                 .build();
     }
     public static List<PropertyDTO> crateFromDomainList(List<Property> list)

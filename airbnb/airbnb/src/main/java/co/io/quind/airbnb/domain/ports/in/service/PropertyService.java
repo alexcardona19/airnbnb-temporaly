@@ -6,7 +6,6 @@ import co.io.quind.airbnb.domain.ports.in.interfaces.IPropertyService;
 import co.io.quind.airbnb.infraestructure.adapters.repositories.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -30,6 +29,7 @@ public class PropertyService implements IPropertyService {
             BusinessRulesValidator.validateDuplicateName(true);
         }
         BusinessRulesValidator.validateProperty(property);
+
         return propertyRepository.save(property);
     }
 

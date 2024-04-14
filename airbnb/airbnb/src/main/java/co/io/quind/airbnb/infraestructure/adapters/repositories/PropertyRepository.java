@@ -62,7 +62,7 @@ public class PropertyRepository implements IPropertyRepository {
             return PropertyEntity.createToDomainList(propertyRepositoryJPA.findAvailablePropertiesByPriceRange(minPrice, maxPrice));
         }catch (Exception exception)
         {
-            log.error("Ocurrió un error al intentar consultar las propiedades", exception);
+            log.error("Ocurrió un error al intentar consultar las propiedades disponibles", exception);
             throw new DataBaseException("Ocurrió un error al intentar consultar las pripiedades");
         }
     }

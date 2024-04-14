@@ -34,13 +34,11 @@ public class PropertyController {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping
   public ResponseEntity<Object> registerProperty (@RequestBody @Valid PropertyDTO propertyDTO) {
-    try {
-      propertyUseCase.registerProperty(propertyDTO);
-      return ResponseEntity.ok().body(new ApiResponseDTO<>("La propiedad fue registrada exitosamente!", HttpStatus.CREATED.value(), propertyDTO));
-    } catch (BusinessException e) {
-      return ResponseEntity.badRequest().body(e.getMessage());
+     PropertyDTO save = propertyUseCase.registerProperty(propertyDTO);
+      ApiResponseDTO res = new ApiResponseDTO("La propiedad fue registrada exitosamente!!", HttpStatus.CREATED);
+      res.setData(save);
+      return ResponseEntity.ok(res);
     }
-  }
 
   @GetMapping
   public ResponseEntity<List<PropertyDTO>> listProperties(
@@ -48,24 +46,22 @@ public class PropertyController {
           @RequestParam("maxPrice") double maxPrice) {
 
     List<PropertyDTO> propertyDTOs = propertyUseCase.listProperties(minPrice, maxPrice);
-    return ResponseEntity.ok().body(new ApiResponseDTO<>("Listado de propieades disponibles", HttpStatus.OK.value(), propertyDTOs).getData());
+    return new ResponseEntity<>(propertyDTOs, HttpStatus.OK);
   }
 
   @PutMapping("/rent/{id}")
   public ResponseEntity<Object> rentProperty(@Valid @PathVariable("id") Long id) {
     PropertyDTO rentedPropertyDTO = propertyUseCase.rentProperty(id);
-    return ResponseEntity.ok().body(new ApiResponseDTO<>("La propiedad fue rentada exitosamente!", HttpStatus.OK.value(), rentedPropertyDTO));
+    ApiResponseDTO res = new ApiResponseDTO("La propiedad fue rentada exitosamente!!", HttpStatus.OK);
+    res.setData(rentedPropertyDTO);
+    return ResponseEntity.ok(res);
   }
 
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<Object> deleteProperty(@PathVariable("id") Long id)
   {
-    try {
-      propertyUseCase.deleteProperty(id);
-      return ResponseEntity.ok().body(new ApiResponseDTO<>("La propiedad ha sido borrada satisfactoriamente", HttpStatus.OK.value(), id));
-
-    } catch (BusinessException e) {
-      return ResponseEntity.badRequest().body(e.getMessage());
+    propertyUseCase.deleteProperty(id);
+    ApiResponseDTO res = new ApiResponseDTO("La propiedad ha sido borrada satisfactoriamente!!", HttpStatus.OK);
+    return ResponseEntity.ok(res);
     }
-  }
 }

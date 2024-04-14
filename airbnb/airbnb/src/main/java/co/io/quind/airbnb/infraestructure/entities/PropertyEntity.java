@@ -7,22 +7,24 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "properties")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 public class PropertyEntity {
-
-    @Id
     @Column(name = "id")
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name")
@@ -40,7 +42,9 @@ public class PropertyEntity {
     @Column(name = "price")
     private double price;
 
-    @Column(name = "dateofcreation")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "date")
     private Date date;
 
     @Column(name = "is_deleted")

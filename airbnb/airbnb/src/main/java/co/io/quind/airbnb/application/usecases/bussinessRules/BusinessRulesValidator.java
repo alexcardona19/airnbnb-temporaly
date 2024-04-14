@@ -12,7 +12,6 @@ public class BusinessRulesValidator {
      private static final List<String> VALID_LOCATIONS = Arrays.asList("Medellin", "Bogota", "Cali", "Cartagena");
      private static final String INVALID_LOCATION_ERROR = "La ubicación de la propiedad no es válida";
     private static final String INVALID_PRICE_ERROR = "El precio de la propiedad no cumple con los requisitos";
-    private static final String INVALID_CREATION_DATE_ERROR = "La propiedad no puede ser borrada porque tiene una vigencia de creación superior a un mes.";
 
      public static void validateProperty(Property property){
          if (!validateLocation(property.getLocation())) {
@@ -22,6 +21,8 @@ public class BusinessRulesValidator {
          if (("Bogota".equals(property.getLocation()) || "Cali".equals(property.getLocation())) && property.getPrice() <= 2000000) {
              throw new BusinessException(INVALID_PRICE_ERROR);
          }
+
+
      }
     public static boolean validateCreationDate(Date creationDate) {
         Calendar calendar = Calendar.getInstance();

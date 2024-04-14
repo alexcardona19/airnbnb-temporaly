@@ -6,13 +6,18 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 @Data
 @Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class PropertyDTO {
@@ -36,16 +41,16 @@ public class PropertyDTO {
 
     private boolean isDeleted;
 
-    public static Property toDomain(PropertyDTO propertyDTO) {
+    public Property toDomain() {
         return Property.builder()
-                .id(propertyDTO.id)
-                .name(propertyDTO.name)
-                .location(propertyDTO.location)
-                .image(propertyDTO.image)
-                .isAvailable(propertyDTO.isAvailable)
-                .price(propertyDTO.price)
-                .date(propertyDTO.date)
-                .isDeleted(propertyDTO.isDeleted)
+                .id(this.getId())
+                .name(this.getName())
+                .location(this.getLocation())
+                .image(this.getImage())
+                .isAvailable(this.isAvailable())
+                .price(this.getPrice())
+                .date(this.getDate())
+                .isDeleted(this.isDeleted())
                 .build();
     }
 

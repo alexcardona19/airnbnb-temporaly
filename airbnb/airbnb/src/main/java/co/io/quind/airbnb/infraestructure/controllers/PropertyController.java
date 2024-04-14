@@ -16,12 +16,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
 import java.util.List;
 
-import static javax.swing.UIManager.put;
 
 @RestController
 @RequestMapping("/api/property")
@@ -33,11 +31,12 @@ public class PropertyController {
     this.propertyUseCase = propertyUseCase;
   }
 
+  @ResponseStatus(HttpStatus.CREATED)
   @PostMapping
   public ResponseEntity<Object> registerProperty (@RequestBody @Valid PropertyDTO propertyDTO) {
     try {
       propertyUseCase.registerProperty(propertyDTO);
-      return ResponseEntity.status(HttpStatus.CREATED).build();
+      return ResponseEntity.ok().body(new ApiResponseDTO<>("La propiedad fue registrada exitosamente!", HttpStatus.CREATED.value(), propertyDTO));
     } catch (BusinessException e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
@@ -49,7 +48,7 @@ public class PropertyController {
           @RequestParam("maxPrice") double maxPrice) {
 
     List<PropertyDTO> propertyDTOs = propertyUseCase.listProperties(minPrice, maxPrice);
-    return new ResponseEntity<>(propertyDTOs, HttpStatus.OK);
+    return ResponseEntity.ok().body(new ApiResponseDTO<>("Listado de propieades disponibles", HttpStatus.OK.value(), propertyDTOs).getData());
   }
 
   @PutMapping("/rent/{id}")
@@ -63,7 +62,8 @@ public class PropertyController {
   {
     try {
       propertyUseCase.deleteProperty(id);
-      return ResponseEntity.ok("La propiedad ha sido borrada satisfactoriamente");
+      return ResponseEntity.ok().body(new ApiResponseDTO<>("La propiedad ha sido borrada satisfactoriamente", HttpStatus.OK.value(), id));
+
     } catch (BusinessException e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }

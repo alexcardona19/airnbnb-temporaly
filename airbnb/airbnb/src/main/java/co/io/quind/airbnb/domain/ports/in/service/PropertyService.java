@@ -27,6 +27,10 @@ public class PropertyService implements IPropertyService {
 
     @Override
     public Property registerProperty(Property property) {
+        if(propertyRepository.existsByName(property.getName()))
+        {
+            throw new BusinessException("Ya existe una propiedad registrada con el mismo nombre");
+        }
         BusinessRulesValidator.validateProperty(property);
         return propertyRepository.save(property);
     }

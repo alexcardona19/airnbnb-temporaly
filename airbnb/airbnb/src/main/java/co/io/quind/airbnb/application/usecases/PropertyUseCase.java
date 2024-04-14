@@ -16,9 +16,11 @@ public class PropertyUseCase {
     public PropertyUseCase(PropertyService propertyService) {
         this.propertyService = propertyService;
     }
-    public Property registerProperty(PropertyDTO propertyDTO)
+    public PropertyDTO  registerProperty(PropertyDTO propertyDTO)
     {
-        return propertyService.registerProperty(PropertyDTO.toDomain(propertyDTO));
+        Property property = propertyDTO.toDomain();
+        Property propertyCreated = propertyService.registerProperty(property);
+        return propertyDTO.fromDomain(propertyCreated);
     }
 
     public List<PropertyDTO> listProperties(double minPrice, double maxPrice) {

@@ -6,7 +6,6 @@ import co.io.quind.airbnb.domain.ports.in.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -22,9 +21,8 @@ public class PropertyUseCase {
         return propertyService.registerProperty(PropertyDTO.toDomain(propertyDTO));
     }
 
-    public List<PropertyDTO> listProperties(BigDecimal minPrice, BigDecimal maxPrice) {
+    public List<PropertyDTO> listProperties(double minPrice, double maxPrice) {
         return PropertyDTO.crateFromDomainList(propertyService.listProperties(minPrice,maxPrice));
     }
-
 
     }

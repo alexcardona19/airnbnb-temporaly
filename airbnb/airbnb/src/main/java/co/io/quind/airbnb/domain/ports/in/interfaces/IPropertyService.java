@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface IPropertyService {
-   List<Property> listProperties(BigDecimal minPrice, BigDecimal maxPrice);
+   List<Property> listProperties(double minPrice, double maxPrice);
    Property registerProperty(Property property);
    void deleteProperty(Long PropertyId);
    void rentProperty(Long PropertyId, Property property);

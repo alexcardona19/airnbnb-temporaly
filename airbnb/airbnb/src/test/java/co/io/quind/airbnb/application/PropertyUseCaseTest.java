@@ -10,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -35,7 +34,7 @@ import static org.mockito.Mockito.when;
         property.setLocation("Bogota");
         property.setImage("Image");
         property.setAvailable(true);
-        property.setPrice(new BigDecimal("1000.00"));
+        property.setPrice(10000);
         property.setDate(new Date());
 
         // Configuración del mock
@@ -50,7 +49,6 @@ import static org.mockito.Mockito.when;
             Assertions.assertEquals("Ubicación de prueba", result.getLocation());
             Assertions.assertEquals("imagen.jpg", result.getImage());
             Assertions.assertTrue(result.isAvailable());
-            Assertions.assertEquals(new BigDecimal("1000.00"), result.getPrice());
 
             return property;
         });

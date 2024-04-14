@@ -1,13 +1,20 @@
 package co.io.quind.airbnb.application.dto;
+
 import co.io.quind.airbnb.domain.models.Property;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PropertyDTO {
     private Long id;
 
@@ -23,104 +30,38 @@ public class PropertyDTO {
     private boolean isAvailable;
 
     @Min(value = 1, message = "El precio debe ser mayor que cero")
-    private BigDecimal price;
+    private double price;
 
     private Date date;
 
-    public PropertyDTO() {
-
-    }
-
-    public PropertyDTO(Long id, String name, String location, String image, boolean isAvailable, BigDecimal price, Date date) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.image = image;
-        this.isAvailable = isAvailable;
-        this.price = price;
-        this.date = date;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
+    private boolean isDeleted = false;
 
     public static Property toDomain(PropertyDTO propertyDTO) {
-        return new Property(
-                propertyDTO.getId(),
-                propertyDTO.getName(),
-                propertyDTO.getLocation(),
-                propertyDTO.getImage(),
-                propertyDTO.isAvailable(),
-                propertyDTO.getPrice(),
-                propertyDTO.getDate()
-        );
+        return Property.builder()
+                .id(propertyDTO.getId())
+                .name(propertyDTO.getName())
+                .location(propertyDTO.getLocation())
+                .image(propertyDTO.getImage())
+                .isAvailable(propertyDTO.isAvailable())
+                .price(propertyDTO.getPrice())
+                .date(propertyDTO.getDate())
+                .isDeleted(propertyDTO.isDeleted())
+                .build();
     }
 
-    public static PropertyDTO fromDomain(Property property) {
-        return new PropertyDTO(
-                property.getId(),
-                property.getName(),
-                property.getLocation(),
-                property.getImage(),
-                property.isAvailable(),
-                property.getPrice(),
-                property.getDate()
-        );
+    public static PropertyDTO fromDomain(Property property)
+    {
+        return PropertyDTO.builder()
+                .id(property.getId())
+                .name(property.getName())
+                .location(property.getLocation())
+                .image(property.getImage())
+                .isAvailable(property.isAvailable())
+                .price(property.getPrice())
+                .date(property.getDate())
+                .isDeleted(property.isDeleted())
+                .build();
     }
-
     public static List<PropertyDTO> crateFromDomainList(List<Property> list)
     {
         return list.stream()
@@ -134,5 +75,4 @@ public class PropertyDTO {
                 .map(PropertyDTO::toDomain)
                 .toList();
     }
-
 }

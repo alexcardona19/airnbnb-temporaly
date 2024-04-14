@@ -7,25 +7,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "properties")
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class PropertyEntity {
-
-    public PropertyEntity() {
-    }
-
-    public PropertyEntity(Long id, String name, String location, String image, boolean isAvailable, BigDecimal price, Date date) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.image = image;
-        this.isAvailable = isAvailable;
-        this.price = price;
-        this.date = date;
-    }
 
     @Id
     @Column(name = "id")
@@ -44,62 +38,14 @@ public class PropertyEntity {
     private boolean isAvailable;
 
     @Column(name = "price")
-    private BigDecimal price;
+    private double price;
 
     @Column(name = "dateofcreation")
     private Date date;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "is_deleted")
+    private boolean isDeleted = false;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Date getDate() {
-        return date;
-    }
 
     public static Property toModel(PropertyEntity propertyEntity) {
         return new Property(
@@ -109,7 +55,8 @@ public class PropertyEntity {
                 propertyEntity.getImage(),
                 propertyEntity.isAvailable(),
                 propertyEntity.getPrice(),
-                propertyEntity.getDate()
+                propertyEntity.getDate(),
+                propertyEntity.isDeleted()
         );
     }
 
@@ -121,7 +68,22 @@ public class PropertyEntity {
                 property.getImage(),
                 property.isAvailable(),
                 property.getPrice(),
-                property.getDate()
+                property.getDate(),
+                property.isDeleted()
         );
+    }
+
+    public static List<PropertyEntity> createFromDomainList(List<Property> list)
+    {
+        return list.stream()
+                .map(PropertyEntity::toEntity)
+                .toList();
+    }
+
+    public static List<Property> createToDomainList(List<PropertyEntity> list)
+    {
+        return list.stream()
+                .map(PropertyEntity::toModel)
+                .toList();
     }
 }

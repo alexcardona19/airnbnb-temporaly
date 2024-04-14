@@ -4,6 +4,7 @@ import co.io.quind.airbnb.domain.models.Property;
 import co.io.quind.airbnb.domain.ports.output.interfaces.IPropertyRepository;
 import co.io.quind.airbnb.infraestructure.JPA.PropertyRepositoryJPA;
 import co.io.quind.airbnb.infraestructure.entities.PropertyEntity;
+import co.io.quind.airbnb.infraestructure.exception.DataBaseException;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -37,8 +38,20 @@ public class PropertyRepository implements IPropertyRepository {
     }
 
     @Override
-    public List<Property> findAvailablePropertiesByPriceRange(BigDecimal minPrice, BigDecimal maxPrice) {
-        return null;
+    public void deletePropertyById(Long id) {
+
+    }
+
+    @Override
+    public List<Property> findAvailablePropertiesByPriceRange(double minPrice, double maxPrice) {
+        try
+        {
+            return PropertyEntity.createToDomainList(propertyRepositoryJPA.findAvailablePropertiesByPriceRange(minPrice, maxPrice));
+        }catch (Exception exception)
+        {
+            //log.error("Ocurrió un error al intentar consultar las propiedades", exception);
+            throw new DataBaseException("Ocurrió un error al intentar consultar las pripiedades");
+        }
     }
 
 }

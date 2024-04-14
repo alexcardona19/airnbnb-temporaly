@@ -18,8 +18,7 @@ public class PropertyService implements IPropertyService {
         this.propertyRepository = propertyRepository;
     }
     @Override
-    public List<Property> listProperties(BigDecimal minPrice, BigDecimal maxPrice) {
-
+    public List<Property> listProperties(double minPrice, double maxPrice) {
         return propertyRepository.findAvailablePropertiesByPriceRange(minPrice,maxPrice);
     }
 

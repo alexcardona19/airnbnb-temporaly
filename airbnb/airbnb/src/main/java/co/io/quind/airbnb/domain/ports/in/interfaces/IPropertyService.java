@@ -9,4 +9,6 @@ public interface IPropertyService {
    Property registerProperty(Property property);
    void deleteProperty(Long id);
    Property rentProperty(Long id);
+   Property editProperty(Property property);
+
 }

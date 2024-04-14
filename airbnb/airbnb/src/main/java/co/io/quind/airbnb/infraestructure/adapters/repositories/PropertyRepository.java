@@ -56,6 +56,20 @@ public class PropertyRepository implements IPropertyRepository {
     }
 
     @Override
+    public Property edit(Property property) {
+        {
+            try
+            {
+                return PropertyEntity.toModel(propertyRepositoryJPA.save(PropertyEntity.toEntity(property)));
+            }catch(Exception exception)
+            {
+                log.error("Ocurrió un error al intentar editar la propiedad en la base de datos", exception);
+                throw new DataBaseException("Ocurrió un error al intentar guardar la propiedad en la base de datos");
+            }
+        }
+    }
+
+    @Override
     public List<Property> findAvailablePropertiesByPriceRange(double minPrice, double maxPrice) {
         try
         {

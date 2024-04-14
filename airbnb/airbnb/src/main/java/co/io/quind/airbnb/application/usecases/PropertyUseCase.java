@@ -35,5 +35,9 @@ public class PropertyUseCase {
         return PropertyDTO.fromDomain(propertyService.rentProperty(id));
     }
 
-
+    public PropertyDTO editProperty(PropertyDTO propertyDTO){
+        Property propertyToEdit = propertyDTO.toDomain();
+        Property modifiedProperty = propertyService.editProperty(propertyToEdit);
+        return propertyDTO.fromDomain(modifiedProperty);
     }
+}

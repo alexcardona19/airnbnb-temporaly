@@ -63,5 +63,14 @@ public class PropertyController {
     propertyUseCase.deleteProperty(id);
     ApiResponseDTO res = new ApiResponseDTO("La propiedad ha sido borrada satisfactoriamente!!", HttpStatus.OK);
     return ResponseEntity.ok(res);
-    }
+  }
+
+  @PutMapping
+  public ResponseEntity<Object> editProperty(@Valid @RequestBody PropertyDTO propertyDTO)
+  {
+    PropertyDTO edit = propertyUseCase.editProperty(propertyDTO);
+    ApiResponseDTO res = new ApiResponseDTO("La propiedad fue editada exitosamente!", HttpStatus.OK);
+    res.setData(edit);
+    return ResponseEntity.ok(res);
+  }
 }

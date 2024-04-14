@@ -56,4 +56,19 @@ public class PropertyService implements IPropertyService {
 
         return propertyRepository.save(property);
     }
+
+    @Override
+    public Property editProperty(Property property) throws BusinessException {
+        Property existingProperty = propertyRepository.findById(property.getId());
+        if (Boolean.TRUE.equals(!existingProperty.isAvailable()) && !existingProperty.getLocation().equals(property.getLocation()))
+        {
+            throw new BusinessException("No se puede mdoificar la ubicación de una propiedad ya arrendada");
+        }
+        if (Boolean.TRUE.equals(!existingProperty.isAvailable()) && existingProperty.getPrice() != (property.getPrice()))
+        {
+            throw new BusinessException("No se puede modificar el precio de una propiedad que está arrendada");
+        }
+        BusinessRulesValidator.validateProperty(property);
+        return propertyRepository.edit(property);
+    }
 }

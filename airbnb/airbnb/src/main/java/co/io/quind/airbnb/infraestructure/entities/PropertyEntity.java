@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,12 +19,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "properties")
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class PropertyEntity {
-    @Column(name = "id")
+
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name")
@@ -76,14 +77,6 @@ public class PropertyEntity {
                 property.isDeleted()
         );
     }
-
-    public static List<PropertyEntity> createFromDomainList(List<Property> list)
-    {
-        return list.stream()
-                .map(PropertyEntity::toEntity)
-                .toList();
-    }
-
     public static List<Property> createToDomainList(List<PropertyEntity> list)
     {
         return list.stream()

@@ -49,7 +49,9 @@ public class PropertyService implements IPropertyService {
     @Override
     public Property rentProperty(Long id) throws BusinessException {
         Property property = propertyRepository.findById(id);
-        if (!property.isAvailable()) {
+        if (property == null) {
+            throw new BusinessException("La propiedad con el ID especificado no ha sido encontrada");
+        } else if (!property.isAvailable()) {
             throw new BusinessException("La propiedad ya está arrendada");
         }
         property.setAvailable(false);

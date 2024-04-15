@@ -20,7 +20,7 @@ public class PropertyUseCase {
     {
         Property property = propertyDTO.toDomain();
         Property propertyCreated = propertyService.registerProperty(property);
-        return propertyDTO.fromDomain(propertyCreated);
+        return PropertyDTO.fromDomain(propertyCreated);
     }
 
     public List<PropertyDTO> listProperties(double minPrice, double maxPrice) {
@@ -38,6 +38,6 @@ public class PropertyUseCase {
     public PropertyDTO editProperty(PropertyDTO propertyDTO){
         Property propertyToEdit = propertyDTO.toDomain();
         Property modifiedProperty = propertyService.editProperty(propertyToEdit);
-        return propertyDTO.fromDomain(modifiedProperty);
+        return PropertyDTO.fromDomain(modifiedProperty);
     }
 }

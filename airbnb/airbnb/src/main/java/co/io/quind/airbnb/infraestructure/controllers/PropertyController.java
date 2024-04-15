@@ -2,7 +2,6 @@ package co.io.quind.airbnb.infraestructure.controllers;
 
 import co.io.quind.airbnb.application.dto.ApiResponseDTO;
 import co.io.quind.airbnb.application.dto.PropertyDTO;
-import co.io.quind.airbnb.domain.exception.BusinessException;
 import co.io.quind.airbnb.application.usecases.PropertyUseCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/property")
+@RequestMapping("/api/property/v1")
 public class PropertyController {
   private final PropertyUseCase propertyUseCase;
 

@@ -28,6 +28,21 @@ Luego de compilar el proyecto por primera vez , se debe ejecuutar estas 2 querie
 - GRANT ALL PRIVILEGES ON TABLE properties TO prueba;
 - GRANT USAGE, SELECT ON SEQUENCE properties_id_seq TO prueba;
 
+## Paso 4: Probar la API
+Se puede Probar en POTSMAN o en su defecto tambien se puede instalar cualquier extensión en Visual studio code thunder client o el mismo POSTMAN
+Esta seria la URL base : http://localhost:8181/api/property/v1
+Con esta estructura de JSON se puede probar registrar una propiedad
+```json
+{
+    "name": "53453453",
+    "location": "Bogota",
+    "image": "IMG",
+    "available": true,
+    "price": 2500000,
+    "date": "2024-04-17",
+    "deleted":false
+}
+
 
 
 
